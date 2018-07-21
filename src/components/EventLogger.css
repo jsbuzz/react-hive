@@ -1,0 +1,5 @@
+.App ul.event-logger li {
+  text-align: left;
+  display: block;
+  font-family: monospace;
+}
