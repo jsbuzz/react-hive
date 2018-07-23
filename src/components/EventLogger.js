@@ -13,20 +13,21 @@ class EventLogger extends Component {
 
   logEvent = (event) => {
     const { events } = this.state;
-    this.setState({
-      events: [
-        ...events,
-        {
-          event,
-          time: new Date().toISOString().substr(11, 12),
-        }
-      ]
+    events.push({
+      event,
+      time: new Date().toISOString().substr(11, 12),
     });
+    this.setState({ events });
+  }
+
+  cleanEvents = () => {
+    this.setState({ events: [] });
   }
 
   listen() {
     this.on(NameSpace.Demo).listen(
       Events.Demo.ButtonPressed, (event) => this.logEvent(event),
+      Events.Demo.Cleanup, () => this.cleanEvents(),
     );
   }
 

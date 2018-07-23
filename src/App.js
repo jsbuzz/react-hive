@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Fiber from 'fiber-framework';
 
 import EventButton from './components/EventButton';
+import CleanupButton from './components/CleanupButton';
 import EventLogger from './components/EventLogger';
 
 import logo from './logo.svg';
@@ -18,6 +19,9 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
+        <p className="App-intro">
+          <CleanupButton />
+        </p>
         <p className="App-intro">
           <EventButton message="Hello" />
           <EventButton message="Bello" />

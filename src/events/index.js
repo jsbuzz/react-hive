@@ -7,5 +7,6 @@ export const DemoEvent = Fiber.defineEventType({
 
 Events.Demo = {};
 Events.Demo.ButtonPressed = Fiber.defineEvent(DemoEvent, 'Demo:ButtonPressed');
+Events.Demo.Cleanup = Fiber.basicEvent('Demo:Cleanup');
 
 export default Events;
