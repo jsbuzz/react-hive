@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import Wings4 from '../wings4';
+import React, { PureComponent } from 'react';
+import Connect from '../connect';
 
 import NameSpace from '../namespace';
 import Events from '../events';
 
-class CleanupButton extends Component {
+class CleanupButton extends PureComponent {
   buttonPressed = () => {
     this.on(NameSpace.Demo).trigger(
       new Events.Demo.Cleanup()
@@ -18,4 +18,4 @@ class CleanupButton extends Component {
   }
 }
 
-export default Wings4(CleanupButton);
+export default Connect(CleanupButton);

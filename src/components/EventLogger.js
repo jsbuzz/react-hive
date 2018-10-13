@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Wings4 from '../wings4';
+import Connect from '../connect';
 
 import NameSpace from '../namespace';
 import Events from '../events';
@@ -41,4 +41,4 @@ class EventLogger extends Component {
   }
 }
 
-export default Wings4(EventLogger);
+export default Connect(EventLogger);

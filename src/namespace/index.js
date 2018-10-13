@@ -1,6 +1,6 @@
-import Fiber from 'fiber-framework';
+import { NameSpace } from '../event-hive/namespace';
 
-export const Demo = Fiber.NameSpace.create('data/demo');
+export const Demo = NameSpace.get('data/demo');
 
 export default {
   Demo,

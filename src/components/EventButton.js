@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import connected from '../wings4';
+import React, { PureComponent } from 'react';
+import Connect from '../connect';
 
 import NameSpace from '../namespace';
 import Events from '../events';
 
 import './EventButton.css';
 
-class EventButton extends Component {
+class EventButton extends PureComponent {
   buttonPressed = () => {
     const { message } = this.props;
     this.on(NameSpace.Demo).trigger(
@@ -26,4 +26,4 @@ class EventButton extends Component {
   }
 }
 
-export default connected(EventButton);
+export default Connect(EventButton);
