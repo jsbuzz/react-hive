@@ -4,8 +4,6 @@ import Connect from '../connect';
 import NameSpace from '../namespace';
 import Events from '../events';
 
-import './EventButton.css';
-
 class EventButton extends PureComponent {
   buttonPressed = () => {
     const { message } = this.props;

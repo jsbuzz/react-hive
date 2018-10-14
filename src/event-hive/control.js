@@ -14,7 +14,11 @@ const Control = {
     });
   },
   triggerSync : (hiveEvent) => {
-    console.log(Control.actor.displayName, 'triggered', hiveEvent.name);
+    console.log(
+      Control.actor.name || Control.actor.displayName || 'Component',
+      'triggered',
+      hiveEvent.name
+    );
   },
   callback : (actor, fn) => {
     console.log('-->', actor.displayName, 'calling', fnName(fn));

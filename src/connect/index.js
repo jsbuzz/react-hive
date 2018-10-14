@@ -1,6 +1,7 @@
+import { Component } from 'react';
 import Control from '../event-hive/control';
 
-export default (ComponentClass) => class extends ComponentClass {
+const connectComponent = (ComponentClass) => class extends ComponentClass {
   on = (ns) => Control.withActor(this, ns);
 
   constructor(...stuff) {
@@ -12,7 +13,17 @@ export default (ComponentClass) => class extends ComponentClass {
 
   componentWillUnmount(...stuff) {
     super.componentWillUnmount && super.componentWillUnmount(...stuff);
-
     Control.cleanup(this);
   }
+};
+
+const connectFunction = (fn) => (props) => fn(
+  props, (ns) => Control.withActor(fn, ns)
+);
+
+export default (component) => {
+  return component.prototype instanceof Component
+    ? connectComponent(component)
+    : connectFunction(component)
+    ;
 };

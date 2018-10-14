@@ -20,14 +20,14 @@ class EventLogger extends Component {
     this.setState({ events });
   }
 
-  cleanEvents = () => {
+  clearEvents = () => {
     this.setState({ events: [] });
   }
 
   listen() {
     this.on(NameSpace.Demo).listen(
       Events.Demo.ButtonPressed, (event) => this.logEvent(event),
-      Events.Demo.Cleanup, () => this.cleanEvents(),
+      Events.Demo.Cleanup, () => this.clearEvents(),
     );
   }
 

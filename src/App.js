@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import EventButton from './components/EventButton';
+import TriggerButton from './components/TriggerButton';
 import CleanupButton from './components/CleanupButton';
 import EventLogger from './components/EventLogger';
 
@@ -32,7 +33,7 @@ class App extends Component {
         <p className="App-intro">
           <EventButton message="Hello" />
           <EventButton message="Bello" />
-          <EventButton message="Hola" />
+          <TriggerButton message="Hola" />
         </p>
         { showLogger ? <EventLogger /> : null }
       </div>
