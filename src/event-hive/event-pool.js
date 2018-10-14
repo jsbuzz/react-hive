@@ -6,7 +6,7 @@ export class EventPool {
     }
 
     addEventListener(eventName, listener, prepend = false) {
-        console.log('addEventListener', eventName, listener);
+        // console.log('addEventListener', eventName, listener);
         if (prepend) {
             return this.eventPool.set(
                 eventName,
@@ -23,7 +23,7 @@ export class EventPool {
     }
 
     removeEventListener(eventName, listener) {
-        console.log('removeEventListener', eventName, listener);
+        // console.log('removeEventListener', eventName, listener);
         let chain = this.eventPool.get(eventName);
 
         if(chain) {

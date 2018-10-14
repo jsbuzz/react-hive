@@ -5,40 +5,9 @@ export class Event {
         this.name = this.constructor.EventName;
     }
 
-    event() {
-        if(!this.originalEvent) {
-            this.originalEvent = new CustomEvent(this.name, {
-                detail     : this,
-                bubbles    : !this.constructor._cancelBubble,
-                cancelable : true
-            });
-        }
-        return this.originalEvent;
-    }
-
-    stopPropagation() {
-        this.originalEvent && this.originalEvent.stopPropagation();
-    }
-
-    preventDefault() {
-        this.originalEvent && this.originalEvent.preventDefault();
-    }
-
-    static bubbles(bubbles) {
-        this._cancelBubble = !bubbles;
-        return this;
-    }
-
     static alias(name) {
         this.EventName = name;
         return this;
-    }
-
-    static on(namespace) {
-        return {
-            namespace,
-            event: this,
-        };
     }
 }
 

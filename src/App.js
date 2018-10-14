@@ -3,28 +3,32 @@ import React, { Component } from 'react';
 import EventButton from './components/EventButton';
 import TriggerButton from './components/TriggerButton';
 import CleanupButton from './components/CleanupButton';
-import EventLogger from './components/EventLogger';
+import EventCounter from './components/EventCounter';
+import MessageLogger from './components/MessageLogger';
+import MessageServer from './components/MessageServer';
+import MessageRequestButton from './components/MessageRequestButton';
 
 import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
-  state = { showLogger: true };
+  state = { showLoggers: true };
 
   render() {
-    const { showLogger } = this.state;
+    const { showLoggers } = this.state;
 
     return (
       <div className="App">
+        <MessageServer />
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
           <button
-            onClick={() => this.setState(state => ({showLogger: !state.showLogger}))}
+            onClick={() => this.setState(state => ({showLoggers: !state.showLoggers}))}
           >
-            { showLogger ? 'hide logger' : 'show logger' }
+            { showLoggers ? 'hide loggers' : 'show loggers' }
           </button>
         </p>
         <p className="App-intro">
@@ -34,8 +38,10 @@ class App extends Component {
           <EventButton message="Hello" />
           <EventButton message="Bello" />
           <TriggerButton message="Hola" />
+          <MessageRequestButton />
         </p>
-        { showLogger ? <EventLogger /> : null }
+        { showLoggers ? <EventCounter /> : null }
+        { showLoggers ? <MessageLogger /> : null }
       </div>
     );
   }

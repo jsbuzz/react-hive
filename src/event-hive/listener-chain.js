@@ -8,7 +8,7 @@ class ListenerChain {
     }
 
     execute(event) {
-        Control.callback(this.actor, this.listener);
+        Control.logCallback(this.actor, this.listener, event);
 
         this.listener(event);
         if(this.next) {

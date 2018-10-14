@@ -13,24 +13,33 @@ const Control = {
       eventPool.removeEventListener(eventName, listener);
     });
   },
-  triggerSync : (hiveEvent) => {
+  logTriggerSync : (hiveEvent) => {
     console.log(
       Control.actor.name || Control.actor.displayName || 'Component',
       'triggered',
       hiveEvent.name
     );
   },
-  callback : (actor, fn) => {
-    console.log('-->', actor.displayName, 'calling', fnName(fn));
+  logCallback : (actor, fn, event) => {
+    if (actor.displayName && actor.displayName.substr(0, 15) === 'StateConnector(') {
+      console.log('-->', actor.displayName, 'forcing re-render', `<-[${event.name}]`);
+    } else {
+      console.log('-->', actor.displayName || actor.name, 'calling', fnName(fn), `<-[${event.name}]`);
+    }
   },
 }
 
 export default Control;
 
 function fnName(fn) {
-  if (fn.name) return fn.name;
+  const propName = fn.__property ? `<${fn.__property}>` : '';
+
+  if (fn.name) return fn.name + propName;
 
   const def = fn.toString().match(/_this2\.([a-zA-Z_$]+)\(/i);
 
-  return def.length > 1 ? `'${def[1]}'` : 'inline callback';
+  return def && (def.length > 1)
+    ? `'${def[1]}${propName}'`
+    : 'inline callback'
+    ;
 }

@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Connect from '../connect';
 
 import NameSpace from '../namespace';
 import Events from '../events';
 
-import './EventLogger.css';
+import './MessageLogger.css';
 
-class EventLogger extends Component {
+class MessageLogger extends PureComponent {
   state = {
     events: [],
   }
@@ -27,18 +27,26 @@ class EventLogger extends Component {
   listen() {
     this.on(NameSpace.Demo).listen(
       Events.Demo.ButtonPressed, (event) => this.logEvent(event),
+      Events.Demo.MessageResponse, (event) => this.logEvent(event),
       Events.Demo.Cleanup, () => this.clearEvents(),
     );
   }
 
   render() {
+    const { messageCount } = this.props;
     const { events } = this.state;
     return (
-      <ul className="event-logger">
-        { events.map( ({event, time}) => <li key={time}>[{time}] {event.message}</li> ) }
-      </ul>
+      <div>
+        Messages logged: { events.length } / { messageCount }
+        <ul className="event-logger">
+          { events.map( ({event, time}) => <li key={time}>[{time}] {event.message}</li> ) }
+        </ul>
+      </div>
     );
   }
 }
 
-export default Connect(EventLogger);
+export default Connect(
+  MessageLogger,
+  NameSpace.Demo,
+);

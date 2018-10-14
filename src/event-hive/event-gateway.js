@@ -6,14 +6,24 @@ export class EventGateway {
         this.eventPool = new EventPool();
     }
 
+    // trigger event after current execution ended
     trigger(hiveEvent) {
-        return new Promise(
-            resolve => resolve(this.triggerSync(hiveEvent))
+        const actor = Control.actor;
+        const promise = new Promise(
+            resolve => global.setTimeout(
+                () => resolve(this.triggerSync(hiveEvent, actor)),
+                0
+            )
         );
+        hiveEvent.promise = promise;
+
+        return promise;
     }
 
-    triggerSync(hiveEvent) {
-        Control.triggerSync(hiveEvent);
+    // trigger event within current execution stack
+    triggerSync(hiveEvent, actor = null) {
+        actor && (Control.actor = actor);
+        Control.logTriggerSync(hiveEvent);
         return this.eventPool.dispatchEvent(hiveEvent);
     }
 
