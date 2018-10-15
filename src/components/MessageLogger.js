@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import Connect from '../connect';
 
-import NameSpace from '../namespace';
 import Events from '../events';
 
 import './MessageLogger.css';
@@ -25,7 +24,7 @@ class MessageLogger extends PureComponent {
   }
 
   listen() {
-    this.on(NameSpace.Demo).listen(
+    this.namespace().listen(
       Events.Demo.ButtonPressed, (event) => this.logEvent(event),
       Events.Demo.MessageResponse, (event) => this.logEvent(event),
       Events.Demo.Cleanup, () => this.clearEvents(),
@@ -48,5 +47,5 @@ class MessageLogger extends PureComponent {
 
 export default Connect(
   MessageLogger,
-  NameSpace.Demo,
+  ({ messageCount }) => ({ messageCount }),
 );

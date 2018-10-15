@@ -22,7 +22,7 @@ const Control = {
   },
   logCallback : (actor, fn, event) => {
     if (actor.displayName && actor.displayName.substr(0, 15) === 'StateConnector(') {
-      console.log('-->', actor.displayName, 'forcing re-render', `<-[${event.name}]`);
+      console.log('-->', actor.displayName, 'checking changes', `<-[${event.name}]`);
     } else {
       console.log('-->', actor.displayName || actor.name, 'calling', fnName(fn), `<-[${event.name}]`);
     }

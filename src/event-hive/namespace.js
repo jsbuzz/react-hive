@@ -34,12 +34,14 @@ export class NameSpace extends EventGateway {
                             if (this.__sendStateUpdatesBouncer) {
                                 global.clearTimeout(this.__sendStateUpdatesBouncer);
                             }
+                            this.__propsChanged.push(property);
                             this.__sendStateUpdatesBouncer = global.setTimeout(
                                 () => {
                                     Control.withActor(
                                         this, this
                                     ).triggerSync(new StateChanged());
                                     this.__sendStateUpdatesBouncer = null;
+                                    this.__propsChanged = [];
                                 },
                                 0
                             );
@@ -51,7 +53,8 @@ export class NameSpace extends EventGateway {
             }
         });
 
-        this.trigger(new InitState());
+        this.__propsChanged = [];
+        this.triggerSync(new InitState());
     }
 
     addEventListener(fiberEvent, eventHandler, prepend = false) {

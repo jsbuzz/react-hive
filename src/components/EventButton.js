@@ -1,13 +1,12 @@
 import React, { PureComponent } from 'react';
 import Connect from '../connect';
 
-import NameSpace from '../namespace';
 import Events from '../events';
 
 class EventButton extends PureComponent {
   buttonPressed = () => {
     const { message } = this.props;
-    this.on(NameSpace.Demo).trigger(
+    this.namespace().trigger(
       new Events.Demo.ButtonPressed(message)
     );
   }

@@ -1,16 +1,18 @@
-import { PureComponent } from 'react';
-import Connect from '../connect';
+import DataComponent from '../connect/DataComponent';
 
-import NameSpace from '../namespace';
 import Events from '../events';
 
-class MessageServer extends PureComponent {
+class MessageServer extends DataComponent {
+  messages = ['Oh lala', 'voila', 'whatever', 'dingo', 'bonjour', 'ciao']
+
   serveMessage = () => {
     global.setTimeout(
       () => {
         console.log('');
-        this.on(NameSpace.Demo).trigger(
-          new Events.Demo.MessageResponse('message served')
+        this.namespace().trigger(
+          new Events.Demo.MessageResponse(
+            this.messages[parseInt((Math.random() * 10000) % this.messages.length, 10)]
+          )
         );
       },
       1000,
@@ -18,14 +20,10 @@ class MessageServer extends PureComponent {
   }
 
   listen() {
-    this.on(NameSpace.Demo).listen(
+    this.namespace().listen(
       Events.Demo.MessageRequest, () => this.serveMessage(),
     );
   }
-
-  render() {
-    return null;
-  }
 }
 
-export default Connect(MessageServer);
+export default MessageServer;

@@ -1,12 +1,11 @@
 import React from 'react';
 import Connect from '../connect';
 
-import NameSpace from '../namespace';
 import Events from '../events';
 
-const TriggerButton = ({ message }, on) => (
+const TriggerButton = ({ message }, namespace) => (
     <button onClick={
-        () => on(NameSpace.Demo).trigger(new Events.Demo.ButtonPressed(message))
+        () => namespace().trigger(new Events.Demo.ButtonPressed(message))
     }>
         { message }
     </button>

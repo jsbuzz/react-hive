@@ -1,17 +1,13 @@
 import React from 'react';
 import Connect from '../connect';
 
-import NameSpace from '../namespace';
-// import Events from '../events';
-
-const EventCounter = ({ eventCount }) => (
+const EventCounter = ({ counter }) => (
   <p>
-    Events triggered: <strong>{ eventCount }</strong>
+    Events triggered: <strong>{ counter }</strong>
   </p>
 );
 
 export default Connect(
   EventCounter,
-  NameSpace.Demo,
-  // [ Events.Demo.ButtonPressed, Events.Demo.Cleanup ],
+  ({ eventCount }) => ({ counter: eventCount }),
 );
