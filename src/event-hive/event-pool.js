@@ -23,7 +23,7 @@ export class EventPool {
     }
 
     removeEventListener(eventName, listener) {
-        // console.log('removeEventListener', eventName, listener);
+        console.log('removeEventListener', eventName, listener);
         let chain = this.eventPool.get(eventName);
 
         if(chain) {

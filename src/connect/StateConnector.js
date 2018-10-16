@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import Control from '../event-hive/control';
 import { StateChanged } from '../event-hive/namespace';
 
-import { getNamespaceFromContext } from './util';
+import { extractProps } from './util';
 
 const StateConnector = (NameSpace, selector, events, WrappedComponent) => {
   const Connector = class extends Component {
-    namespace = (ns) => Control.withActor(
+    namespace = () => Control.withActor(
       this,
-      ns || this.__contextNamespace
+      NameSpace || this.props.namespace
     );
     propSelector = typeof selector === 'function' ? selector : props => props
     watchedProps = null
@@ -16,26 +16,22 @@ const StateConnector = (NameSpace, selector, events, WrappedComponent) => {
     componentDidMount() {
       this.displayName = `StateConnector(${WrappedComponent.displayName || WrappedComponent.name})`;
 
-      this.__contextNamespace = getNamespaceFromContext(this);
-
       if (events && events.length) {
-        events.forEach( Event => this.namespace(NameSpace).listen(
+        events.forEach( Event => this.namespace().listen(
           Event, () => this.checkState(),
         ));
       } else {
-        this.namespace(NameSpace).listen(
+        this.namespace().listen(
           StateChanged, () => this.checkState(),
         );
-        this.extractProps();
+        this.watchedProps = extractProps(selector);
       }
-
-      global.setTimeout(() => this.forceUpdate(), 0);
     }
 
     checkState() {
       if (this.watchedProps) {
         for (let prop of this.watchedProps) {
-          if (this.namespace(NameSpace).__propsChanged.includes(prop)) {
+          if (this.namespace().__propsChanged.includes(prop)) {
             this.forceUpdate();
             break ;
           }
@@ -45,35 +41,12 @@ const StateConnector = (NameSpace, selector, events, WrappedComponent) => {
       this.forceUpdate();
     }
 
-    extractProps() {
-      const strSelector = selector.toString();
-      const arrowFunction = strSelector.includes('=>');
-      let propList = null;
-
-      if (arrowFunction) {
-        propList = strSelector
-          .split('=>').shift().trim()
-          .replace(/[(){}\s]/g, '').split(',')
-          ;
-      } else {
-        propList = strSelector
-          .split('return').pop().trim()
-          .replace(/[(){};\s]/g, '').split(',')
-          .map(prop => prop.split(':').pop())
-          ;
-      }
-
-      if (propList.length) {
-        this.watchedProps = propList;
-      }
-    }
-
     componentWillUnmount(...stuff) {
       Control.cleanup(this);
     }
 
     render() {
-      const ns = this.namespace(NameSpace);
+      const ns = this.namespace();
       return <WrappedComponent {...this.props} {...this.propSelector((ns && ns.state) || {})} />;
     }
   };

@@ -1,17 +1,17 @@
-import { Component } from 'react';
+import React from 'react';
 
 import Control from '../event-hive/control';
 import StateConnector from './StateConnector';
-import { getNamespaceFromContext } from './util';
+
+export const NamespaceCtx = React.createContext();
 
 const connectComponent = (ComponentClass) => {
   const ConnectedComponent = class extends ComponentClass {
     on = (ns) => Control.withActor(this, ns);
-    namespace = () => Control.withActor(this, this.__contextNamespace);
+    namespace = () => Control.withActor(this, this.props.namespace);
 
     componentDidMount(...stuff) {
       super.componentDidMount && super.componentDidMount(...stuff);
-      this.__contextNamespace = getNamespaceFromContext(this);
 
       this.listen && this.listen();
       this.displayName = ComponentClass.name;
@@ -27,35 +27,38 @@ const connectComponent = (ComponentClass) => {
   return ConnectedComponent;
 };
 
-const connectFunction = (fn, namespace, events) => {
-  const connectedFn = class extends Component {
-    on = (ns) => Control.withActor(this, ns || this.__contextNamespace);
-
-    componentDidMount() {
-      this.displayName = fn.name;
-      this.__contextNamespace = getNamespaceFromContext(this);
-    }
-
-    render() {
-      return fn(this.props, this.on);
-    }
-  };
-  connectedFn.displayName = fn.name;
-
-  return connectedFn;
-};
+const connectFunction = (fn, namespace, events) => (props) => fn(
+  props, (ns) => {
+    ns || (ns = props.namespace);
+    return Control.withActor(fn, ns)
+  }
+);
 
 
 export default (component, selector = null, namespace = null, events = null) => {
+  let ConnectedComponent;
+
   if (component.prototype.render) {
-    return selector
+    ConnectedComponent = selector
       ? StateConnector(namespace, selector, events, connectComponent(component))
       : connectComponent(component)
       ;
+  } else {
+    const fn = connectFunction(component);
+    fn.displayName = component.name;
+
+    ConnectedComponent = selector
+      ? StateConnector(namespace, selector, events, fn)
+      : fn
+      ;
   }
 
-  return selector
-    ? StateConnector(namespace, selector, events, connectFunction(component))
-    : connectFunction(component)
-    ;
+  const HiveComponent = (props) => (
+    <NamespaceCtx.Consumer>
+      { ctx => <ConnectedComponent {...props} namespace={ctx} /> }
+    </NamespaceCtx.Consumer>
+  );
+  HiveComponent.displayName = `H:${ConnectedComponent.displayName}`;
+
+  return HiveComponent;
 };

@@ -21,21 +21,21 @@ class App extends Component {
 
     return (
       <div className="App">
-        <NameSpaceContext namespace={NameSpace.Demo}>
-          <MessageServer />
+        <NameSpaceContext
+          namespace={NameSpace.Demo}
+          services={MessageServer}
+        >
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
             <h1 className="App-title">Welcome to React</h1>
           </header>
           <p className="App-intro">
+            <CleanupButton />
             <button
               onClick={() => this.setState(state => ({showLoggers: !state.showLoggers}))}
             >
               { showLoggers ? 'hide loggers' : 'show loggers' }
             </button>
-          </p>
-          <p className="App-intro">
-            <CleanupButton />
           </p>
           <p className="App-intro">
             <EventButton message="Hello" />

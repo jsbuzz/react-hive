@@ -1,8 +1,6 @@
-import DataComponent from '../connect/DataComponent';
-
 import Events from '../events';
 
-class MessageServer extends DataComponent {
+class MessageServer {
   messages = ['Oh lala', 'voila', 'whatever', 'dingo', 'bonjour', 'ciao']
 
   serveMessage = () => {
