@@ -1,20 +1,23 @@
 # EventHive for React
-Add a layer of communication on top of your UI - abstract your business logic with event flows.
 
-# Redux
+State management and communication library.
+
+**Project is in prototype phase, breaking changes are going to be introduced until first beta release is out.**
+
+## Redux
   - state only
   - lots of boilerplate
   - reducers are painful
   - dispatch...
   - no way of type-checking actions
 
-# EventHive
+## EventHive
   - events AND global state
   - reduced boilerplate
   - type-checked events
 
 
-# Events vs state
+## Events vs state
 
 state is less portable, harder to make universally working components. Events are open ended, components can be tested with full communication in complete isolation.
 
