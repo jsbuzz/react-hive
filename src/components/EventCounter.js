@@ -1,5 +1,5 @@
 import React from 'react';
-import Connect from '../connect';
+import Connect from '../react-signal';
 
 const EventCounter = ({ counter }) => (
   <p>

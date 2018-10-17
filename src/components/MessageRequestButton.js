@@ -1,12 +1,11 @@
 import React from 'react';
-import Connect from '../connect';
+import Connect from '../react-signal';
 
 import Events from '../events';
 
-const MessageRequestButton = (props, ctx) => (
-    <button onClick={
-        () => ctx().trigger(new Events.Demo.MessageRequest())
-    }>
+const { MessageRequest } = Events.Demo;
+const MessageRequestButton = (props, namespace) => (
+    <button onClick={() => namespace().trigger(new MessageRequest())}>
         request message
     </button>
 );

@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import Connect from '../connect';
+import Connect from '../react-signal';
 
 import Events from '../events';
 

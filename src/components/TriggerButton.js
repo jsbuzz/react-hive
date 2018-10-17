@@ -1,14 +1,15 @@
 import React from 'react';
-import Connect from '../connect';
+import { Enable } from '../react-signal';
 
+import NameSpace from '../namespace';
 import Events from '../events';
 
-const TriggerButton = ({ message }, namespace) => (
+const TriggerButton = ({ message }, on) => (
     <button onClick={
-        () => namespace().trigger(new Events.Demo.ButtonPressed(message))
+        () => on(NameSpace.Demo).trigger(new Events.Demo.ButtonPressed(message))
     }>
         { message }
     </button>
 );
 
-export default Connect(TriggerButton);
+export default Enable(TriggerButton);

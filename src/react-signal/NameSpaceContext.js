@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Control from '../event-hive/control';
+import Control from './event-hive/control';
 
 import { NamespaceCtx } from './';
 
@@ -26,7 +26,10 @@ class NameSpaceContext extends Component {
   }
 
   componentWillUnmount() {
-    this.services.forEach(service => Control.cleanup(service));
+    this.services.forEach((service) => {
+      Control.cleanup(service);
+      service.destructor && service.destructor();
+    });
   }
 
   render() {

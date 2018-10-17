@@ -1,5 +1,5 @@
-import { defineEventType } from '../event-hive/event-type';
-import { basicEvent, defineEvent } from '../event-hive/event';
+import { defineEventType } from '../react-signal/event-hive/event-type';
+import { basicEvent, defineEvent } from '../react-signal/event-hive/event';
 const Events = {};
 
 export const MessageEvent = defineEventType({
