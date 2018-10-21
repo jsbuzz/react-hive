@@ -5,9 +5,10 @@ import StateConnector from './connect/StateConnector';
 
 export const NamespaceCtx = React.createContext();
 
-const connectComponent = (ComponentClass) => class extends ComponentClass {
-  on = (ns) => Control.withActor(this, ns);
-  namespace = () => Control.withActor(this, this.props.namespace);
+const connectComponent = ComponentClass => class extends ComponentClass {
+  on = ns => Control.withActor(this, ns)
+
+  namespace = () => Control.withActor(this, this.props.namespace)
 
   componentDidMount(...stuff) {
     super.componentDidMount && super.componentDidMount(...stuff);

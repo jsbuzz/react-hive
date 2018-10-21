@@ -25,6 +25,14 @@ const StateConnector = (NameSpace, selector, events, WrappedComponent) => {
           StateChanged, () => this.checkState(),
         );
         this.watchedProps = extractProps(selector);
+        if (this.watchedProps) {
+          this.watchedProps.forEach(prop => {
+            if (typeof this.namespace().state[prop] === 'undefined') {
+              this.watchedProps = null;
+              console.warn(`${WrappedComponent.displayName} was connected with property watcher '${prop}' that is missing from state`);
+            }
+          })
+        }
       }
     }
 
