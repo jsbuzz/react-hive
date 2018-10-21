@@ -7,7 +7,7 @@ import EventButton from './components/EventButton';
 import TriggerButton from './components/TriggerButton';
 import CleanupButton from './components/CleanupButton';
 import EventCounter from './components/EventCounter';
-import MessageLogger from './components/MessageLogger';
+import MessageList from './components/MessageList';
 import LastMessage from './components/LastMessage';
 import MessageRequestButton from './components/MessageRequestButton';
 
@@ -45,7 +45,7 @@ class App extends Component {
             <MessageRequestButton />
           </p>
           { showLoggers ? <EventCounter /> : null }
-          { showLoggers ? <MessageLogger /> : null }
+          { showLoggers ? <MessageList /> : null }
         </NameSpaceContext>
       </div>
     );

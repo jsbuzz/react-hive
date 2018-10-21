@@ -9,6 +9,14 @@ export class Event {
         this.EventName = name;
         return this;
     }
+
+    static withAlias(name) {
+      return defineEvent(this, name);
+    }
+
+    static with(...params) {
+        return new this(...params);
+    }
 }
 
 export function basicEvent(name) {

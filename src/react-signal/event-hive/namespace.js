@@ -25,7 +25,7 @@ export class NameSpace extends EventGateway {
         this.state = this.__state.reader;
         Object.getOwnPropertyNames(stateDefinition).forEach((property) => {
             this.__state.addProperty(property);
-            const setters = stateDefinition[property](this.__state.modifier);
+            const setters = stateDefinition[property](this.__state.modifier, property);
             for (let i = 0; i < setters.length; i+=2) {
                 const setter = (event) => {
                     setters[i+1](event);

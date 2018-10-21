@@ -1,13 +1,16 @@
-import { defineEventType } from '../react-signal/event-hive/event-type';
-import { basicEvent, defineEvent } from '../react-signal/event-hive/event';
+// import { defineEventType } from '../react-signal/event-hive/event-type';
+import { Event, basicEvent, defineEvent } from '../react-signal/event-hive/event';
 const Events = {};
 
-export const MessageEvent = defineEventType({
-    message: String,
-});
+export const MessageEvent = class extends Event {
+    constructor(message) {
+      super();
+      this.message = message;
+    }
+};
 
 Events.Demo = {};
-Events.Demo.ButtonPressed = defineEvent(MessageEvent, 'Demo:ButtonPressed');
+Events.Demo.ButtonPressed = MessageEvent.withAlias('Demo:ButtonPressed');
 Events.Demo.Cleanup = basicEvent('Demo:Cleanup');
 
 Events.Demo.MessageRequest = basicEvent('Demo:MessageRequest');

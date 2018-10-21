@@ -8,6 +8,9 @@ export class EventGateway {
 
     // trigger event after current execution ended
     trigger(hiveEvent) {
+        if (hiveEvent.withAlias) {
+            hiveEvent = new hiveEvent();
+        }
         const actor = Control.actor;
         const promise = new Promise(
             resolve => global.setTimeout(
@@ -22,6 +25,9 @@ export class EventGateway {
 
     // trigger event within current execution stack
     triggerSync(hiveEvent, actor = null) {
+        if (hiveEvent.withAlias) {
+            hiveEvent = new hiveEvent();
+        }
         actor && (Control.actor = actor);
         Control.logTriggerSync(hiveEvent);
         return this.eventPool.dispatchEvent(hiveEvent);
